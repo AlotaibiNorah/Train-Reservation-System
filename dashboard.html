@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Dashboard</title>
     <style>
-        /* ستايلات خاصة بالصفحة عشان ما نعدل ملف الـ CSS الأساسي */
+    
         .hidden {
             display: none !important;
         }
@@ -27,10 +27,10 @@
         }
 
         .mini-btn {
-    display: block;      /* هذا السطر سيجعل كل زر ينزل في سطر جديد */
-    width: 100%;         /* ليصبح عرض الزر متناسقاً */
+    display: block;      
+    width: 100%;         
     padding: 10px 20px;
-    margin-bottom: 8px;  /* هذه هي المسافة البسيطة التي طلبتها بين الزرين */
+    margin-bottom: 8px;  
     font-size: 14px;
     cursor: pointer;
 }
@@ -86,10 +86,10 @@
 
 
     <script>
-        // التحقق من الصلاحيات عند تحميل الصفحة
-        const savedEmail = localStorage.getItem('email');        // اسم مطابق للـ Register
-        const savedRole = localStorage.getItem('savedRole');     // اسم مطابق للـ Register
-        const savedName = localStorage.getItem('fullName');      // اسم مطابق للـ Register
+      
+        const savedEmail = localStorage.getItem('email');        
+        const savedRole = localStorage.getItem('savedRole');     
+        const savedName = localStorage.getItem('fullName');      
 
         if (!savedEmail) {
             window.location.href = 'login.html';
@@ -97,7 +97,7 @@
             document.getElementById('uName').innerText = savedName || "User";
             document.getElementById('uRole').innerText = savedRole;
 
-            // إظهار لوحة الأدمن فقط إذا كان الدور Admin
+            
             if (savedRole === 'Admin') {
                 document.getElementById('adminPanel').classList.remove('hidden');
             }
