@@ -21,7 +21,6 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
-    /* معلومات الرحلة */
     .trip-info {
         background: linear-gradient(135deg, #eaf4ff, #ffffff);
         border: 1px solid #b7d8f7;
@@ -50,7 +49,6 @@
         gap: 20px;
     }
 
-    /* صندوق اختيار المقاعد */
     .input-group-top {
         background: #eaf4ff;
         padding: 8px 15px;
@@ -111,7 +109,6 @@
         border-bottom: 2px solid #bbb;
     }
 
-    /* تصميم الكراسي */
     .seat {
         width: 35px;
         height: 40px;
@@ -166,7 +163,6 @@
         margin: 10px 0;
     }
 
-    /* صندوق ملخص الحجز */
     .summary-box {
         margin-top: 20px;
         padding: 15px;
@@ -375,8 +371,8 @@
     }
 </script>
 <script>
-// تحديث المقاعد في Dashboard بعد الحجز
-function updateSeatsAfterBooking(seatsBooked){
+
+    function updateSeatsAfterBooking(seatsBooked){
     let seatsData = JSON.parse(localStorage.getItem('trainSeats')) || [];
     let selectedIndex = parseInt(localStorage.getItem('selectedTripIndex')) || 0;
 
@@ -388,7 +384,6 @@ function updateSeatsAfterBooking(seatsBooked){
     }
 }
 
-// ربط الزر الجديد
 document.getElementById('confirmBookingBtn').addEventListener('click', function(){
     let seatsToBook = parseInt(document.getElementById('maxSeats').value) || 1;
     updateSeatsAfterBooking(seatsToBook);
