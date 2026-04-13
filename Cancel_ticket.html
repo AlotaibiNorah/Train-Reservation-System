@@ -123,7 +123,7 @@ style="display:block; text-align:center; margin-top:15px; font-size:12px; color:
       return;
     }
 
-    // check duplicate (already cancelled)
+
     const cancelled = getCancelledTickets();
     if (cancelled[id]) {
       showBox('errorMessage', `Ticket #${id} is already cancelled.`);
@@ -135,7 +135,7 @@ style="display:block; text-align:center; margin-top:15px; font-size:12px; color:
       return;
     }
 
-    // validate Other (but we will NOT display it later)
+
     let finalReason = selectedReason;
     if (selectedReason === 'Other') {
       if (!otherReason) {
@@ -145,11 +145,11 @@ style="display:block; text-align:center; margin-top:15px; font-size:12px; color:
       finalReason = otherReason;
     }
 
-    // confirm before cancelling (NO reason shown here either)
+
     const ok = confirm(`Are you sure you want to cancel Ticket #${id}?`);
     if (!ok) return;
 
-    // save internally (so next time it says already cancelled)
+
     cancelled[id] = {
       status: 'Cancelled',
       reason: finalReason,
@@ -157,10 +157,10 @@ style="display:block; text-align:center; margin-top:15px; font-size:12px; color:
     };
     saveCancelledTickets(cancelled);
 
-    // success message WITHOUT reason
+
     showBox('successMessage', `Ticket #${id} has been cancelled successfully.`);
 
-    // optional: reset form
+   
     document.getElementById('tID').value = '';
     document.getElementById('reasonSelect').value = '';
     document.getElementById('otherReason').value = '';
