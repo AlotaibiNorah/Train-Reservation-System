@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+<title>Booking History</title>
+
+<style>
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    color:#333;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+    font-size:14px;
+}
+
+th{
+    background: linear-gradient(135deg,#1e6fb9,#0d4e8a);
+    color:white;
+}
+
+tr:nth-child(even){
+    background-color:#f2f6fb;
+}
+</style>
+</head>
+
+<body>
+
+<div class="center-box">
+    <div class="container" style="width:80%; max-width:800px;">
+
+        <h2 style="color:#0d4e8a;">My Booking History</h2>
+
+        <table id="historyTable">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Trip</th>
+                    <th>Date</th>
+                    <th>Seats</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="historyBody"></tbody>
+        </table>
+
+        <div id="noData" style="display:none; margin:20px;">
+            No bookings found.
+        </div>
+
+        <a href="dashboard.html"
+           style="display:block; margin-top:20px; text-decoration:none; color:#1e6fb9; font-weight:bold;">
+           Back to Dashboard
+        </a>
+
+    </div>
+</div>
+
+<script>
+const history = JSON.parse(localStorage.getItem('bookingHistory')) || [];
+const tbody = document.getElementById('historyBody');
+const noData = document.getElementById('noData');
+
+if(history.length === 0){
+    noData.style.display = 'block';
+    document.getElementById('historyTable').style.display = 'none';
+}
+else{
+    history.forEach(booking =>{
+       const row = `<tr>
+    <td>${booking.ticketID}</td>
+    <td>${booking.trip}</td>
+    <td>${booking.date}</td>
+    <td>${booking.seats.join(', ')}</td>
+    <td>${booking.totalPrice} SAR</td>
+    <td style="font-weight:bold; color:${booking.status === 'Cancelled' ? '#d9534f' : '#0d4e8a'};">
+        ${booking.status || 'Active'}
+    </td>
+</tr>`;
+        tbody.innerHTML += row;
+    });
+}
+</script>
+
+</body>
+</html>

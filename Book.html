@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Train Booking System</title>
+    <style>
+    body { 
+        font-family: sans-serif; 
+        display: flex; 
+        justify-content: center; 
+        padding: 20px;
+        background: url("train.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+        
+    .container { 
+        width: 600px; 
+        background: white;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* معلومات الرحلة */
+    .trip-info {
+        background: linear-gradient(135deg, #eaf4ff, #ffffff);
+        border: 1px solid #b7d8f7;
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .trip-route {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0d4e8a;
+        margin-bottom: 8px;
+    }
+
+    .trip-route .arrow {
+        margin: 0 10px;
+    }
+
+    .trip-details {
+        font-size: 14px;
+        color: #555;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* صندوق اختيار المقاعد */
+    .input-group-top {
+        background: #eaf4ff;
+        padding: 8px 15px;
+        border-radius: 10px;
+        border: 1px solid #b7d8f7;
+        margin: 0 auto 20px auto;
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #0d4e8a;
+        font-weight: bold;
+    }
+
+    .train-interior {
+        background-color: #e8e8e8;
+        border: 2px solid #ccc;
+        border-radius: 40px;
+        padding: 5px 40px;
+        position: relative;
+    }
+
+    .section-header {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 900;
+        color: #1e6fb9;
+        letter-spacing: 10px;
+        margin: 10px 0;
+        opacity: 0.65;
+    }
+
+    .section-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+ 
+    .seats-column {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+    }
+
+    .divider-passageway {
+        height: 45px;
+        background-color: #d0d0d0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px -40px;
+        font-weight: bold;
+        color: #444;
+        letter-spacing: 5px;
+        font-size: 12px;
+        border-top: 2px solid #bbb;
+        border-bottom: 2px solid #bbb;
+    }
+
+    /* تصميم الكراسي */
+    .seat {
+        width: 35px;
+        height: 40px;
+        background-color: #D3D3D3;
+        border-radius: 6px 6px 12px 12px;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        font-weight: bold;
+        color: #555;
+        box-shadow: inset 0 -3px 0 rgba(0,0,0,0.1);
+    }
+
+    .seat::before {
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 22px;
+        height: 8px;
+        background: inherit;
+        border-radius: 3px 3px 0 0;
+    }
+
+    .selected {
+        background-color: #d9ecff !important;
+        color: #0d4e8a !important;
+        border: 2px solid #1e6fb9;
+    }
+
+    .booked {
+        background-color: #A9A9A9 !important;
+        cursor: not-allowed;
+    }
+
+    .booked::after {
+        content: "X";
+        position: absolute;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .emergency-exit {
+        color: #d9534f;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    /* صندوق ملخص الحجز */
+    .summary-box {
+        margin-top: 20px;
+        padding: 15px;
+        border-top: 2px dashed #b7d8f7;
+        background: #fff;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    total-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0d4e8a;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+        
+    .confirm-btn {
+        background: linear-gradient(135deg,#1e6fb9,#0d4e8a);
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .confirm-btn:hover {
+        background: linear-gradient(135deg,#155a96,#083b6b);
+    }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="color: #0d4e8a; text-align: center; margin-top: 0;">Train Booking</h2>
+
+    <div class="trip-info">
+        <div class="trip-route" id="display-route">
+            Loading Trip...
+        </div>
+        <div class="trip-details">
+            <span id="display-time">🕗 --:--</span>
+            <span id="display-date">📅 --/--/----</span>
+        </div>
+    </div>
+
+    <div class="input-group-top">
+        <label>How many seats?</label>
+        <input type="number" id="maxSeats" value="1" min="1" max="10" onchange="resetSelection()" 
+               style="width: 45px; text-align: center; border: 1px solid #1e6fb9; border-radius: 4px;">
+    </div>
+
+    <div class="train-interior">
+        <div style="text-align:center; font-size:12px; color:gray;">↑</div>
+        <div style="text-align:center; font-weight:bold; font-size:12px; color:gray;">Front</div>
+        <div class="emergency-exit">EXIT ◄ EMERGENCY ► EXIT</div>
+        
+        <div class="section-header">VIP</div>
+        <div class="section-grid">
+            <div class="seats-column" id="vipL"></div>
+            <div class="seats-column" id="vipR"></div>
+        </div>
+
+        <div class="divider-passageway">
+            <span style="float:left; font-size:10px;">Gate 1</span>
+            <span style="margin: 0 150px;">PASSAGEWAY</span>
+            <span style="float:right; font-size:10px;">Gate 2</span>
+        </div>
+
+        <div class="section-header">STANDARD</div>
+        <div class="section-grid">
+            <div class="seats-column" id="stdL"></div>
+            <div class="seats-column" id="stdR"></div>
+        </div>
+
+        <div class="emergency-exit" style="margin-top: 20px;">EXIT ◄ EMERGENCY ► EXIT</div>
+    </div>
+
+    <div class="summary-box">
+        <div class="summary-item">
+            <span>Seats Selected:</span>
+            <span id="seat-list">None</span>
+        </div>
+        <div class="summary-item">
+            <span>Total Seats:</span>
+            <span id="count">0</span>
+        </div>
+        <div class="summary-item total-price">
+            <span>Total Price:</span>
+            <span><span id="total-price">0</span> SAR</span>
+        </div>
+
+        <button id="confirmBookingBtn" class="confirm-btn" onclick="confirmBooking()">Confirm Booking</button>
+
+        <a href="dashboard.html" 
+           style="display:block; text-align:center; margin-top:15px; font-size:12px; color:#0d4e8a; text-decoration:none;">
+           ← Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<script>
+    let selectedSeats = [];
+
+    window.onload = function() {
+        const savedTrip = JSON.parse(localStorage.getItem('selectedTrip'));
+
+        if (savedTrip) {
+            document.getElementById('display-route').innerText = savedTrip.route;
+            document.getElementById('display-time').innerText = "🕗 " + savedTrip.time;
+            document.getElementById('display-date').innerText = "📅 " + savedTrip.date;
+        }
+        
+        createSeats('vipL', 10, 1, 'V'); 
+        createSeats('vipR', 10, 11, 'V');
+        createSeats('stdL', 14, 21, 'S');
+        createSeats('stdR', 14, 35, 'S');
+    };
+
+    const VIP_PRICE = 400;
+    const STD_PRICE = 200;
+
+    function resetSelection() {
+        selectedSeats = [];
+        document.querySelectorAll('.selected').forEach(s => s.classList.remove('selected'));
+        updateSummary();
+    }
+
+    function updateSummary() {
+    let total = 0;
+    let names = [];
+    selectedSeats.forEach(seat => {
+        names.push(seat.innerText);
+        total += seat.dataset.type === 'V' ? VIP_PRICE : STD_PRICE;
+    });
+    document.getElementById('count').innerText = selectedSeats.length;
+    document.getElementById('seat-list').innerText = names.length > 0 ? names.join(', ') : "None";
+    document.getElementById('total-price').innerText = total;
+}
+
+    function createSeats(id, count, startNum, type) {
+        const container = document.getElementById(id);
+        for (let i = 0; i < count; i++) {
+            const seat = document.createElement('div');
+            seat.classList.add('seat');
+            const n = startNum + i;
+            seat.innerText = type + n;
+            seat.dataset.type = type;
+
+            if ([2, 5, 14, 28].includes(n)) {
+                seat.classList.add('booked');
+            } else {
+                seat.onclick = function() {
+                    const max = parseInt(document.getElementById('maxSeats').value);
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        selectedSeats = selectedSeats.filter(s => s !== this);
+                    } else if (selectedSeats.length < max) {
+                        this.classList.add('selected');
+                        selectedSeats.push(this);
+                    } else {
+                        alert("You can only select " + max + " seats.");
+                    }
+                    updateSummary();
+                };
+            }
+            container.appendChild(seat);
+        }
+    }
+
+    function confirmBooking() {
+        if (selectedSeats.length === 0) {
+            alert("Please select at least one seat.");
+            return;
+        }
+
+        const tripRoute = document.getElementById('display-route').innerText;
+        const tripTime = document.getElementById('display-time').innerText.replace("🕗 ", "");
+        const tripDate = document.getElementById('display-date').innerText.replace("📅 ", "");
+
+        const newBooking = {
+    seats: selectedSeats.map(s => s.innerText),
+    totalPrice: document.getElementById('total-price').innerText,
+    trip: tripRoute, 
+    date: tripDate,
+    time: tripTime,
+    ticketID: "T" + Math.floor(1000 + Math.random() * 9000),
+    status: "Active"
+};
+
+
+        let history = JSON.parse(localStorage.getItem('bookingHistory')) || [];
+        history.push(newBooking);
+        localStorage.setItem('bookingHistory', JSON.stringify(history));
+        localStorage.setItem('currentBooking', JSON.stringify(newBooking));
+
+        window.location.href = 'confirmation.html';
+    }
+</script>
+<script>
+// تحديث المقاعد في Dashboard بعد الحجز
+function updateSeatsAfterBooking(seatsBooked){
+    let seatsData = JSON.parse(localStorage.getItem('trainSeats')) || [];
+    let selectedIndex = parseInt(localStorage.getItem('selectedTripIndex')) || 0;
+
+    if(seatsData[selectedIndex].seats >= seatsBooked){
+        seatsData[selectedIndex].seats -= seatsBooked;
+        localStorage.setItem('trainSeats', JSON.stringify(seatsData));
+    } else {
+        alert("No seats available!");
+    }
+}
+
+// ربط الزر الجديد
+document.getElementById('confirmBookingBtn').addEventListener('click', function(){
+    let seatsToBook = parseInt(document.getElementById('maxSeats').value) || 1;
+    updateSeatsAfterBooking(seatsToBook);
+});
+</script>
+
+</body>
+</html>

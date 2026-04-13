@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Passenger Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="center-box">
+        <div class="container">
+
+            <h2>Edit Passenger Profile</h2>
+
+            <form id="profileForm">
+
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" required>
+
+                <label for="passengerID">ID:</label>
+                <input type="text" id="passengerID" required>
+
+                <button type="submit" class="profile-btn">Save Changes</button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+
+        /* تحميل البيانات داخل الفورم */
+        document.getElementById("fullName").value =
+            localStorage.getItem("fullName");
+
+        document.getElementById("email").value =
+            localStorage.getItem("email");
+
+        document.getElementById("phone").value =
+            localStorage.getItem("phone");
+
+        document.getElementById("passengerID").value =
+            localStorage.getItem("passengerID");
+
+
+        /* حفظ التعديلات */
+        document.getElementById("profileForm").onsubmit = function (e) {
+
+            e.preventDefault();
+
+            localStorage.setItem("fullName",
+                document.getElementById("fullName").value);
+
+            localStorage.setItem("email",
+                document.getElementById("email").value);
+
+            localStorage.setItem("phone",
+                document.getElementById("phone").value);
+
+            localStorage.setItem("passengerID",
+                document.getElementById("passengerID").value);
+
+            alert("Profile Updated!");
+
+            window.location.href = "Viwe Passenher Profile.html";
+
+        };
+
+    </script>
+
+</body>
