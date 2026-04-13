@@ -14,7 +14,7 @@ body{
     height: 100vh;
 }
 
-/* صفحة الولكم */
+
 .welcome-left {
     position: absolute;
     top: 18%;
@@ -35,7 +35,7 @@ body{
     color: white;
 }
 
-/* زر Book Now */
+
 .hero-btn {
     background: linear-gradient(135deg,#1e6fb9,#0d4e8a);
     color: white;
@@ -51,7 +51,7 @@ body{
     background: linear-gradient(135deg,#155a96,#083b6b);
 }
 
-/* البوكس الأبيض */
+
 .center-box {
     height: 100vh;
     display: flex;
@@ -78,7 +78,7 @@ select {
     border: 1px solid #ddd;
 }
 
-/* زر Register و Login */
+
 .action-btn {
     width: 100%;
     padding: 14px;
@@ -96,7 +96,6 @@ select {
     background: linear-gradient(135deg,#155a96,#083b6b);
 }
 
-/* الروابط تحت */
 .container a{
     color: #0d4e8a;
     font-weight: bold;
@@ -108,7 +107,6 @@ select {
     text-decoration: underline;
 }
 
-/* الأدمن بانل */
 .hidden {
     display: none !important;
 }
@@ -122,7 +120,6 @@ select {
     color: #333;
 }
 
-/* صفحة البروفايل */
 .profile-container {
     background: white;
     padding: 25px;
@@ -133,7 +130,6 @@ select {
     color: #333;
 }
 
-/* زر البروفايل */
 .profile-btn {
     margin-top: 20px;
     padding: 10px 20px;
