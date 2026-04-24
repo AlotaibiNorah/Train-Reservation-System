@@ -27,9 +27,9 @@
             const email = document.getElementById('lEmail').value;
             const p = document.getElementById('lPass').value;
 
-          
-            const savedEmail = localStorage.getItem('email');   
-            const savedPass = localStorage.getItem('savedPass');  
+            // جلب القيم الصحيحة من LocalStorage
+            const savedEmail = localStorage.getItem('email');      // اسم مطابق للـ Register
+            const savedPass = localStorage.getItem('savedPass');  // الباسورد
 
             if (email === savedEmail && p === savedPass) {
                 alert("Login successful!");

@@ -69,26 +69,26 @@
         let totalRev = 0;
         let active = 0;
         let cancelled = 0;
-        let routeStats = {};     
+        let routeStats = {}; // لتحليل أكثر المسارات حجزاً
 
         history.forEach(booking => {
             if (booking.status !== 'Cancelled') {
                 totalRev += parseFloat(booking.totalPrice);
                 active++;
                 
-            
+                // تتبع اتجاهات الحجز حسب المسار
                 routeStats[booking.trip] = (routeStats[booking.trip] || 0) + 1;
             } else {
                 cancelled++;
             }
         });
 
-    
+        // تحديث الأرقام في الواجهة
         document.getElementById('totalRevenue').innerText = totalRev;
         document.getElementById('activeCount').innerText = active;
         document.getElementById('cancelledCount').innerText = cancelled;
 
-        
+        // رسم المخطط البياني (اتجاهات الحجز حسب المسار)
         const ctx = document.getElementById('bookingChart').getContext('2d');
         new Chart(ctx, {
             type: 'bar',

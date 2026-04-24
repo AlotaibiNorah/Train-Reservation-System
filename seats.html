@@ -119,6 +119,8 @@ select, button {
     <div id="tripContainer"></div>
 
 
+<!-- زر العودة -->
+
 
 <a href="dashboard.html"
    style="display:block; text-align:center; margin-top:20px; 
@@ -128,11 +130,11 @@ select, button {
 </a></div>
 
 <script>
-    
+// قائمة المدن والحد الأقصى للمقاعد
 const cities = ["Riyadh","Jeddah","Makkah","Madina","Dammam","Khobar","Taif","Tabuk","Al Bahah","Yanbu","Al Jubail","Al Ahsa"];
 const MAX_SEATS = 38;
 
-
+// إنشاء كل الرحلات الممكنة
 let trips = [];
 cities.forEach(from => {
     cities.forEach(to => {
@@ -142,6 +144,7 @@ cities.forEach(from => {
     });
 });
 
+// عرض رحلة واحدة بناءً على الاختيار
 function showTrip(){
     const from = document.getElementById('fromSelect').value;
     const to = document.getElementById('toSelect').value;
@@ -159,10 +162,10 @@ function showTrip(){
 
     const selectedRoute = from + " → " + to;
 
-
+    // قراءة الهيستوري من localStorage
     const bookingHistory = JSON.parse(localStorage.getItem('bookingHistory')) || [];
 
-  
+    // حساب المقاعد المحجوزة فقط (status = 'Active')
     let bookedSeats = 0;
     bookingHistory.forEach(b => {
         if(b.trip === selectedRoute && b.status === 'Active'){
@@ -172,6 +175,7 @@ function showTrip(){
 
     const availableSeats = MAX_SEATS - bookedSeats;
 
+    // إنشاء بطاقة الرحلة
     const card = document.createElement('div');
     card.classList.add('trip-card');
 
@@ -194,9 +198,9 @@ function showTrip(){
     container.appendChild(card);
 }
 
-
+// عند الضغط على زر الحجز → يقلل من المقاعد فقط بعد إضافة الهيستوري
 function bookTrip(route){
-   
+    // هنا مجرد توجيه لصفحة الحجز، عدد المقاعد لن يتغير إلا بعد إتمام الحجز في Booking History
     localStorage.setItem('selectedTrip', JSON.stringify({route}));
     window.location.href = 'Book.html';
 }

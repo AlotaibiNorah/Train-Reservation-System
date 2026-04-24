@@ -75,59 +75,55 @@ style="display:block; text-align:center; margin-top:15px; font-size:12px; color:
 </div>
 
 <script>
-  function toggleOtherReason() {
+function toggleOtherReason() {
     const selected = document.getElementById('reasonSelect').value;
     const otherInput = document.getElementById('otherReason');
 
     if (selected === 'Other') {
-      otherInput.style.display = 'block';
-      otherInput.focus();
+        otherInput.style.display = 'block';
+        otherInput.focus();
     } else {
-      otherInput.style.display = 'none';
-      otherInput.value = '';
+        otherInput.style.display = 'none';
+        otherInput.value = '';
     }
-  }
+}
 
-  function getCancelledTickets() {
+function getCancelledTickets() {
     try {
-      return JSON.parse(localStorage.getItem('cancelledTickets') || '{}');
+        return JSON.parse(localStorage.getItem('cancelledTickets') || '{}');
     } catch {
-      return {};
+        return {};
     }
-  }
+}
 
-  function saveCancelledTickets(obj) {
+function saveCancelledTickets(obj) {
     localStorage.setItem('cancelledTickets', JSON.stringify(obj));
-  }
+}
 
-  function showBox(id, msg) {
+function showBox(id, msg) {
     const el = document.getElementById(id);
     el.innerText = msg;
     el.style.display = 'block';
-  }
+}
 
-  function hideBoxes() {
+function hideBoxes() {
     document.getElementById('errorMessage').style.display = 'none';
     document.getElementById('successMessage').style.display = 'none';
-  }
+}
 
-  function isValidTicketID(id) {
+function isValidTicketID(id) {
     const pattern = /^[A-Za-z][0-9]{1,4}$/;
 
-    if (!pattern.test(id)) {
-      return false;
-    }
+    if (!pattern.test(id)) return false;
 
     const numericPart = id.slice(1);
 
-    if (/^0+$/.test(numericPart)) {
-      return false;
-    }
+    if (/^0+$/.test(numericPart)) return false;
 
     return true;
-  }
+}
 
-  function processCancel() {
+function processCancel() {
 
     hideBoxes();
 
@@ -193,14 +189,20 @@ style="display:block; text-align:center; margin-top:15px; font-size:12px; color:
 
     localStorage.setItem('bookingHistory', JSON.stringify(history));
 
-const tripsData = JSON.parse(localStorage.getItem('tripsData') || '[]');
-const cancelledTrip = history[bookingIndex].route; 
-const trip = tripsData.find(t => t.route === cancelledTrip);
-if(trip){
-    trip.seats += 1;
-    if(trip.seats > 38) trip.seats = 38; 
-    localStorage.setItem('tripsData', JSON.stringify(tripsData));
-}
+   
+    let bookedSeats = JSON.parse(localStorage.getItem("bookedSeats")) || [];
+    const cancelledSeats = history[bookingIndex].seats;
+    bookedSeats = bookedSeats.filter(seat => !cancelledSeats.includes(seat));
+    localStorage.setItem("bookedSeats", JSON.stringify(bookedSeats));
+    const tripsData = JSON.parse(localStorage.getItem('tripsData') || '[]');
+    const cancelledTrip = history[bookingIndex].route;
+    const trip = tripsData.find(t => t.route === cancelledTrip);
+
+    if(trip){
+        trip.seats += 1;
+        if(trip.seats > 38) trip.seats = 38;
+        localStorage.setItem('tripsData', JSON.stringify(tripsData));
+    }
 
     showBox('successMessage', `Ticket ${id} has been cancelled successfully.`);
 
@@ -209,7 +211,6 @@ if(trip){
     document.getElementById('otherReason').value = '';
     document.getElementById('otherReason').style.display = 'none';
 }
-
 </script>
 
 </body>

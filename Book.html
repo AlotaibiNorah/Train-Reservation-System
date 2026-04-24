@@ -21,6 +21,7 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
+
     .trip-info {
         background: linear-gradient(135deg, #eaf4ff, #ffffff);
         border: 1px solid #b7d8f7;
@@ -49,6 +50,7 @@
         gap: 20px;
     }
 
+    
     .input-group-top {
         background: #eaf4ff;
         padding: 8px 15px;
@@ -109,6 +111,7 @@
         border-bottom: 2px solid #bbb;
     }
 
+
     .seat {
         width: 35px;
         height: 40px;
@@ -163,6 +166,7 @@
         margin: 10px 0;
     }
 
+    
     .summary-box {
         margin-top: 20px;
         padding: 15px;
@@ -272,6 +276,8 @@
     </div>
 </div>
 
+
+
 <script>
     let selectedSeats = [];
 
@@ -300,43 +306,59 @@
     }
 
     function updateSummary() {
-    let total = 0;
-    let names = [];
-    selectedSeats.forEach(seat => {
-        names.push(seat.innerText);
-        total += seat.dataset.type === 'V' ? VIP_PRICE : STD_PRICE;
-    });
-    document.getElementById('count').innerText = selectedSeats.length;
-    document.getElementById('seat-list').innerText = names.length > 0 ? names.join(', ') : "None";
-    document.getElementById('total-price').innerText = total;
-}
+        let total = 0;
+        let names = [];
+        selectedSeats.forEach(seat => {
+            names.push(seat.innerText);
+            total += seat.dataset.type === 'V' ? VIP_PRICE : STD_PRICE;
+        });
+        document.getElementById('count').innerText = selectedSeats.length;
+        document.getElementById('seat-list').innerText = names.length > 0 ? names.join(', ') : "None";
+        document.getElementById('total-price').innerText = total;
+    }
 
+   
     function createSeats(id, count, startNum, type) {
         const container = document.getElementById(id);
+
+        let bookedSeats = JSON.parse(localStorage.getItem("bookedSeats")) || [];
+
         for (let i = 0; i < count; i++) {
             const seat = document.createElement('div');
             seat.classList.add('seat');
+
             const n = startNum + i;
-            seat.innerText = type + n;
+            const seatId = type + n;
+
+            seat.id = seatId;
+            seat.innerText = seatId;
             seat.dataset.type = type;
 
-            if ([2, 5, 14, 28].includes(n)) {
-                seat.classList.add('booked');
-            } else {
-                seat.onclick = function() {
-                    const max = parseInt(document.getElementById('maxSeats').value);
-                    if (this.classList.contains('selected')) {
-                        this.classList.remove('selected');
-                        selectedSeats = selectedSeats.filter(s => s !== this);
-                    } else if (selectedSeats.length < max) {
-                        this.classList.add('selected');
-                        selectedSeats.push(this);
-                    } else {
-                        alert("You can only select " + max + " seats.");
-                    }
-                    updateSummary();
-                };
+           
+            if (bookedSeats.includes(seatId)) {
+                seat.classList.add("booked");
             }
+
+            seat.onclick = function() {
+
+               
+                if (this.classList.contains('booked')) return;
+
+                const max = parseInt(document.getElementById('maxSeats').value);
+
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                    selectedSeats = selectedSeats.filter(s => s !== this);
+                } else if (selectedSeats.length < max) {
+                    this.classList.add('selected');
+                    selectedSeats.push(this);
+                } else {
+                    alert("You can only select " + max + " seats.");
+                }
+
+                updateSummary();
+            };
+
             container.appendChild(seat);
         }
     }
@@ -351,16 +373,26 @@
         const tripTime = document.getElementById('display-time').innerText.replace("🕗 ", "");
         const tripDate = document.getElementById('display-date').innerText.replace("📅 ", "");
 
-        const newBooking = {
-    seats: selectedSeats.map(s => s.innerText),
-    totalPrice: document.getElementById('total-price').innerText,
-    trip: tripRoute, 
-    date: tripDate,
-    time: tripTime,
-    ticketID: "T" + Math.floor(1000 + Math.random() * 9000),
-    status: "Active"
-};
+       
+        let bookedSeats = JSON.parse(localStorage.getItem("bookedSeats")) || [];
 
+        selectedSeats.forEach(seat => {
+            if (!bookedSeats.includes(seat.innerText)) {
+                bookedSeats.push(seat.innerText);
+            }
+        });
+
+        localStorage.setItem("bookedSeats", JSON.stringify(bookedSeats));
+
+        const newBooking = {
+            seats: selectedSeats.map(s => s.innerText),
+            totalPrice: document.getElementById('total-price').innerText,
+            trip: tripRoute, 
+            date: tripDate,
+            time: tripTime,
+            ticketID: "T" + Math.floor(1000 + Math.random() * 9000),
+            status: "Active"
+        };
 
         let history = JSON.parse(localStorage.getItem('bookingHistory')) || [];
         history.push(newBooking);
@@ -370,9 +402,9 @@
         window.location.href = 'confirmation.html';
     }
 </script>
-<script>
 
-    function updateSeatsAfterBooking(seatsBooked){
+<script>
+function updateSeatsAfterBooking(seatsBooked){
     let seatsData = JSON.parse(localStorage.getItem('trainSeats')) || [];
     let selectedIndex = parseInt(localStorage.getItem('selectedTripIndex')) || 0;
 
@@ -388,7 +420,5 @@ document.getElementById('confirmBookingBtn').addEventListener('click', function(
     let seatsToBook = parseInt(document.getElementById('maxSeats').value) || 1;
     updateSeatsAfterBooking(seatsToBook);
 });
-</script>
-
-</body>
+</script></body>
 </html>
