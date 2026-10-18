@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Revenue & Booking Reports</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 5px solid #0d4e8a;
+        }
+        .stat-card h3 { font-size: 14px; color: #666; margin-bottom: 10px; }
+        .stat-card p { font-size: 24px; font-weight: bold; color: #0d4e8a; }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="center-box">
+    <div class="container" style="width:90%; max-width:900px;">
+        <h2 style="color: #0d4e8a;">Financial & Booking Analytics</h2>
+
+        <div class="report-grid">
+            <div class="stat-card">
+                <h3>Total Revenue</h3>
+                <p><span id="totalRevenue">0</span> SAR</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Bookings</h3>
+                <p id="activeCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Cancelled Tickets</h3>
+                <p id="cancelledCount" style="color: #d9534f;">0</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="bookingChart"></canvas>
+        </div>
+
+        <a href="dashboard.html" style="display:block; margin-top:20px; text-decoration:none; color:#1e6fb9; font-weight:bold;">
+           ← Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const history = JSON.parse(localStorage.getItem('bookingHistory')) || [];
+        
+        let totalRev = 0;
+        let active = 0;
+        let cancelled = 0;
+        let routeStats = {}; // لتحليل أكثر المسارات حجزاً
+
+        history.forEach(booking => {
+            if (booking.status !== 'Cancelled') {
+                totalRev += parseFloat(booking.totalPrice);
+                active++;
+                
+                // تتبع اتجاهات الحجز حسب المسار
+                routeStats[booking.trip] = (routeStats[booking.trip] || 0) + 1;
+            } else {
+                cancelled++;
+            }
+        });
+
+        // تحديث الأرقام في الواجهة
+        document.getElementById('totalRevenue').innerText = totalRev;
+        document.getElementById('activeCount').innerText = active;
+        document.getElementById('cancelledCount').innerText = cancelled;
+
+        // رسم المخطط البياني (اتجاهات الحجز حسب المسار)
+        const ctx = document.getElementById('bookingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(routeStats),
+                datasets: [{
+                    label: 'Number of Bookings per Route',
+                    data: Object.values(routeStats),
+                    backgroundColor: '#1e6fb9',
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Booking Trends by Route' }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

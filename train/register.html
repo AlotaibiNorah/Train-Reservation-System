@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Create Account</title>
+</head>
+
+<body>
+
+    <div class="center-box">
+        <div class="container">
+
+            <h2>Create Account</h2>
+
+            <form id="regForm">
+
+                <input type="text" id="rName" placeholder="Full name" required>
+
+                <input type="email" id="rEmail" placeholder="Email address"
+                    pattern="[a-zA-Z0-9._%+-]+@(gmail\.com|icloud\.com|hotmail\.com|yahoo\.com)"
+                    title="Please use a Gmail, iCloud, Hotmail, or Yahoo email" required>
+
+                <input type="tel" id="rPhone" placeholder="Phone number (05xxxxxxxx)" pattern="05[0-9]{8}"
+                    maxlength="10" title="Phone number must start with 05 and be 10 digits long" required>
+
+                <input type="text" id="rID" inputmode="numeric" pattern="[0-9]*" placeholder="ID Number" required>
+
+                <input type="password" id="rPass" placeholder="Password" required>
+
+                <select id="rRole">
+                    <option value="Staff">Staff</option>
+                    <option value="Admin">Admin</option>
+                </select>
+
+                <button type="submit" class="action-btn">
+                    Register
+                </button>
+
+            </form>
+
+            <p class="bottom-text">
+                Already have an account?
+                <a href="login.html">Login</a>
+            </p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('regForm').onsubmit = function (e) {
+
+            e.preventDefault();
+
+            const email = document.getElementById('rEmail').value;
+
+            const emailCheck =
+                /^[a-zA-Z0-9._%+-]+@(gmail\.com|icloud\.com|hotmail\.com|yahoo\.com)$/;
+
+            if (!emailCheck.test(email)) {
+                alert("Only Gmail, iCloud, Hotmail, or Yahoo emails are allowed.");
+                return;
+            }
+
+            localStorage.setItem('fullName',
+                document.getElementById('rName').value);
+
+            localStorage.setItem('email', email);
+
+            localStorage.setItem('phone',
+                document.getElementById('rPhone').value);
+
+            localStorage.setItem('passengerID',
+                document.getElementById('rID').value);
+
+            localStorage.setItem('savedPass',
+                document.getElementById('rPass').value);
+
+            localStorage.setItem('savedRole',
+                document.getElementById('rRole').value);
+
+            alert("Account created successfully!");
+
+            window.location.href = "login.html";
+        };
+    </script>
+</body>
+
+</html>

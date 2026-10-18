@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="center-box">
+        <div class="container">
+            <h2>Login</h2>
+            <input type="email" id="lEmail" placeholder="Email address"
+                pattern="[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|hotmail\.com)"
+                title="Please enter a valid Gmail, Yahoo, or Hotmail address">
+            <input type="password" id="lPass" placeholder="Password" minlength="6" maxlength="20"
+                title="Password must be 6-20 characters long">
+            <button onclick="login()" class="action-btn">Login</button>
+
+            <p class="bottom-text">
+                Don't have an account? <a href="register.html">
+                    Register here</a>
+            </p>
+        </div>
+    </div>
+    <script>
+        function login() {
+            const email = document.getElementById('lEmail').value;
+            const p = document.getElementById('lPass').value;
+
+            // جلب القيم الصحيحة من LocalStorage
+            const savedEmail = localStorage.getItem('email');      // اسم مطابق للـ Register
+            const savedPass = localStorage.getItem('savedPass');  // الباسورد
+
+            if (email === savedEmail && p === savedPass) {
+                alert("Login successful!");
+                window.location.href = 'dashboard.html';
+            } else {
+                alert("Invalid Email or Password!");
+            }
+        }
+    </script>
+</body>
+
+</html>

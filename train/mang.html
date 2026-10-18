@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Train Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="center-box">
+    <div class="container">
+        <h2>Train Trip Booking</h2>
+
+        <select id="tripSelect">
+            <option value="0">Riyadh → Jeddah</option>
+            <option value="1">Dammam → Riyadh</option>
+            <option value="2">Makkah → Madinah</option>
+        </select>
+
+        <p id="availableSeats"></p>
+
+        <button class="action-btn" id="bookBtn">Book Seat</button>
+        <button class="action-btn" id="cancelBtn">Cancel Booking</button>
+
+        <p id="message"></p>
+    </div>
+</div>
+
+<script>
+
+// عدد المقاعد لكل رحلة
+let seats = [30, 20, 15];
+let maxSeats = [30, 20, 15];
+
+// عرض المقاعد
+function updateSeats() {
+    let tripIndex = document.getElementById("tripSelect").value;
+    document.getElementById("availableSeats").innerText =
+        "Available Seats: " + seats[tripIndex];
+}
+
+// عند الضغط على Book
+document.getElementById("bookBtn").addEventListener("click", function () {
+
+    let tripIndex = document.getElementById("tripSelect").value;
+
+    if (seats[tripIndex] <= 0) {
+        document.getElementById("message").innerText = "No seats available.";
+        return;
+    }
+
+    seats[tripIndex]--;
+    document.getElementById("message").innerText = "Booking confirmed.";
+
+    updateSeats();
+});
+
+// عند الضغط على Cancel
+document.getElementById("cancelBtn").addEventListener("click", function () {
+
+    let tripIndex = document.getElementById("tripSelect").value;
+
+    if (seats[tripIndex] >= maxSeats[tripIndex]) {
+        document.getElementById("message").innerText = "No booking to cancel.";
+        return;
+    }
+
+    seats[tripIndex]++;
+    document.getElementById("message").innerText = "Booking cancelled.";
+
+    updateSeats();
+});
+
+// أول ما تفتح الصفحة
+updateSeats();
+
+</script>
+
+</body>
+</html>
