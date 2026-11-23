@@ -28,6 +28,6 @@ How to Run the Project
 3. Open index.html in your web browser.
 4. Start exploring the system.
 
-Project Type
 
+Project Type
 Software Engineering Course Project
