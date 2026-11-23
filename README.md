@@ -1,12 +1,13 @@
 Train Reservation & Management System
 
+
 A web-based system for managing train schedules, passenger profiles, ticket bookings, and reservations.
 
 Built using HTML, CSS, and JavaScript with LocalStorage.
  
 
 
- 
+
 Overview
 
 This project provides a simple interface for managing train reservations and passenger information.
@@ -41,12 +42,14 @@ Train-Reservation-System/
 │── style.css
 │── README.md
 
+
 Technologies Used
 * HTML5
 * CSS3
 * JavaScript
 * LocalStorage
 * GitHub Pages
+
 
 How to Run the Project
 
@@ -60,6 +63,7 @@ Option 2: Run Locally
 3. Open index.html in your browser.
 4. Navigate through the system.
 
+
 Team Members
 
 * Norah Abdulaziz Alotaibi
@@ -68,6 +72,7 @@ Team Members
 * Moudy Ali Alsubaie 
 * Dalal Saleh Alothman 
 * Fajr Faleh Alharbi 
+
 
 Contact
 For questions or feedback, please open an Issue in the repository.
