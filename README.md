@@ -16,7 +16,7 @@ Main Features
 * Ticket cancellation
 * Reservation history
 * Dashboard and reports
-* 
+ 
 Project Structure
 
 Train-Reservation-System/
@@ -47,6 +47,7 @@ Technologies Used
 * GitHub Pages
 
 How to Run the Project
+
 Option 1: GitHub Pages
 Open the live website:
 https://alotaibinorah.github.io/Train-Reservation-System/
