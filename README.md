@@ -45,7 +45,7 @@ Technologies Used
 * JavaScript
 * LocalStorage
 * GitHub Pages
-* 
+
 How to Run the Project
 Option 1: GitHub Pages
 Open the live website:
