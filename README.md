@@ -51,6 +51,7 @@ How to Run the Project
 Option 1: GitHub Pages
 Open the live website:
 https://alotaibinorah.github.io/Train-Reservation-System/
+
 Option 2: Run Locally
 1. Download the project as a ZIP file.
 2. Extract the folder.
