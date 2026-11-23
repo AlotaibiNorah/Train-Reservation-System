@@ -21,15 +21,18 @@ Train-Reservation-System/
 │   ├── Book.html
 │   ├── Cancel.html
 │   ├── Cancel_ticket.html
+│   ├── View Passenger Profile.html
 │   ├── confirmation.html
 │   ├── dashboard.html
 │   ├── edit-profile.html
 │   ├── history.html
 │   ├── login.html
+│   ├── mang.html
 │   ├── register.html
 │   ├── reports.html
 │   ├── routes.html
-│   └── seats.html
+│   ├── seats.html
+│   └── tripReports.html
 │── index.html
 │── style.css
 │── README.md
