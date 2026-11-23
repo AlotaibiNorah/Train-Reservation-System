@@ -29,4 +29,5 @@ How to Run the Project
 4. Start exploring the system.
 
 Project Type
+
 Software Engineering Course Project
