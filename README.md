@@ -4,9 +4,11 @@ A web-based system for managing train schedules, passenger profiles, ticket book
 
 Built using HTML, CSS, and JavaScript with LocalStorage.
  
-⸻
- 
+
+
+ 
 Overview
+
 This project provides a simple interface for managing train reservations and passenger information.
 Main Features
 
