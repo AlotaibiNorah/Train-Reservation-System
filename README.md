@@ -1,9 +1,9 @@
 
 # Train Reservation & Management System
 
-A web-based system for managing train schedules, passenger profiles, ticket bookings, and reservations.
+**Software Engineering I (CS1350) – Course Project**
 
-Built using **HTML, CSS, and JavaScript**, with **LocalStorage** for client-side data storage.
+A web-based system for managing train schedules, passenger profiles, ticket bookings, and reservations.
 
 ---
 
