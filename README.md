@@ -4,6 +4,7 @@
 **Software Engineering I (CS1350) – Course Project**
 
 A web-based system for managing train schedules, passenger profiles, ticket bookings, and reservations.
+
 Built using **HTML, CSS, and JavaScript**, with **LocalStorage** for client-side data storage.
 ---
 
